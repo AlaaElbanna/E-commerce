@@ -1,0 +1,43 @@
+﻿@model List<Resturant.Models.DB.ResturantRate>
+<div class="card bg-light ">
+    <div class="card-header">Comments</div>
+    <article class="row">
+
+        @foreach (var feedback in Model)
+        {
+            <div class="col-md-2 col-sm-2 hidden-xs">
+                <figure class="thumbnail">
+                    <img class="img-responsive" style="height:90px" src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png" />
+                    <figcaption class="text-center">@feedback.UserId</figcaption>
+                </figure>
+            </div>
+            <div class="col-md-10 col-sm-10">
+                <div class="panel panel-default arrow left">
+                    <div class="panel-body">
+                        <header class="text-left">
+                            <div class="comment-user"><i class="fa fa-user"></i> @feedback.UserId</div>
+                            <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> @feedback.FeedbackRate</time>
+                        </header>
+                        <div class="comment-post">
+                            <h5 class="card-title">@feedback.Comment</h5>
+                            @for (int i = 0; i < @feedback.Rate; i++)
+                            {
+                                <i class="fas fa-star" style="color:yellow"></i>
+                            }
+                            @for (int i = 0; i < 5 - @feedback.Rate; i++)
+                            {
+                                <i class="fas fa-star" style="color:darkgray"></i>
+                            }
+                        </div>
+                        <br/>
+                    </div>
+                </div>
+            </div>
+
+
+
+        }
+    </article>
+
+</div>
+  

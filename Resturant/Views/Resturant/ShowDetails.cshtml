@@ -1,0 +1,134 @@
+﻿@model  Resturant.Models.DB.Resturant
+
+@{
+    ViewBag.Title = "ShowDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ShowDetails</h2>
+
+
+<section id="story" class="description_content">
+    <div class="text-content container">
+        <div class="col-md-6">
+            <input type="text" id="RestID" value="@Model.ID" hidden />
+            <h1>@Model.Name</h1>
+            <br />
+            <br />
+            @for (int i = 0; i < Model.Rate; i++)
+            {
+                <i class="fas fa-star" style="color:yellow"></i>
+            }
+            @for (int i = 0; i < 5 - Model.Rate; i++)
+            {
+                <i class="fas fa-star" style="color:darkgray"></i>
+            }
+            <h3>Address : @Model.Address</h3>
+
+            <p class="desc-text">Description :@Model.Descrtption </p>
+            <button class="btn bg-primary btn-lg" style="background-color:green"><a href="~/Views/Resturant/ShowDetails">OrderNow</a></button>
+        </div>
+        <div class="col-md-6">
+            <div class="img-section">
+                <img src="@Model.Menu" width="100%" height="50%">
+            </div>
+        </div>
+
+        <br />
+        <br />
+
+
+    </div>
+
+</section>
+<div>
+    <form>
+        <div class="form-group">
+            <div class="col-md-10">
+                <label>Rate</label>
+                <input type="number" name="Rate" id="Rate" class="form-control" max="5" min="1" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-10">
+                <label>Comment</label>
+                <input type="text" name="Comment" id="Comment" class="form-control" />
+
+            </div>
+        </div>
+    </form>
+    <br />
+    <br />
+    <button class="btn bg-primary btn-lg" style="background-color:green" id="Commentbtn">Add Comment</button>
+
+</div>
+<br />
+
+<br />
+<div id="commentHeader">
+    <div class="card bg-light ">
+        <div class="card-header">Comments</div>
+        <article class="row">
+
+            @foreach (var feedback in Model.ResturantRates)
+            {
+                <div class="col-md-2 col-sm-2 hidden-xs">
+                    <figure class="thumbnail">
+                        <img class="img-responsive" style="height:90px" src="http://www.tangoflooring.ca/wp-content/uploads/2015/07/user-avatar-placeholder.png" />
+                        <figcaption class="text-center">@feedback.UserId</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-10 col-sm-10">
+                    <div class="panel panel-default arrow left">
+                        <div class="panel-body">
+                            <header class="text-left">
+                                <div class="comment-user"><i class="fa fa-user"></i> @feedback.UserId</div>
+                                <time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i> @feedback.FeedbackRate</time>
+                            </header>
+                            <div class="comment-post">
+                                <h5 class="card-title">@feedback.Comment</h5>
+                                @for (int i = 0; i < @feedback.Rate; i++)
+                                {
+                                    <i class="fas fa-star" style="color:yellow"></i>
+                                }
+                                @for (int i = 0; i < 5 - @feedback.Rate; i++)
+                                {
+                                    <i class="fas fa-star" style="color:darkgray"></i>
+                                }
+                            </div>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+
+
+
+            }
+        </article>
+
+    </div>
+
+</div>
+
+<script>
+    $("#Commentbtn").click(function () {
+         $.ajax
+            ({
+                url: '/Resturant/ShowDetailss',
+                data:
+                {
+                    RestId: $("#RestID").val(),
+                    Comment: $("#Comment").val(),
+                    Rate: $("#Rate").val(),
+                  }
+            })
+            .done(function (response) {
+                $("#commentHeader").html(response);
+                $("#Comment").val("");
+                $("#Rate").val("");
+            })
+            .fail(function () {
+                alert("Fail")
+            });
+    });
+</script>

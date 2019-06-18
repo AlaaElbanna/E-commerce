@@ -1,0 +1,33 @@
+﻿@model List<Resturant.Models.DB.Resturant>
+@{
+    ViewBag.Title = "Index";
+}
+@foreach (var res in Model)
+{
+<section id="story" class="description_content">
+    <div class="text-content container">
+        <div class="col-md-6">
+            <h1>@res.Name</h1>
+            <br />
+            <br />
+            @for (int i = 0; i < res.Rate; i++)
+            {
+                <i class="fas fa-star" style="color:yellow"></i>
+            }
+            @for (int i = 0; i < 5 - res.Rate; i++)
+            {
+                <i class="fas fa-star" style="color:darkgray"></i>
+            }
+            <p class="desc-text">@res.Descrtption </p>
+            <button class="btn bg-primary btn-lg" style="background-color:green"><a href="~/Resturant/ShowDetails/@res.ID">Rate & Menu</a></button>
+        </div>
+        <div class="col-md-6">
+            <div class="img-section">
+                <img src="@res.ResturantPhoto" width="100%" height="50%" >
+            </div>
+        </div>
+    </div>
+</section>
+}
+
+
